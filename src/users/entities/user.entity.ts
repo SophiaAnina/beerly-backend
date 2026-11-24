@@ -1,31 +1,39 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 @Entity()
 export class User {
-    @PrimaryGeneratedColumn("uuid")
-    id: number;
-    @Column()
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column({ type: 'varchar', length: 100 })
     name: string;
-    @Column()
+
+    @Column({ type: 'varchar', length: 100 })
     last_name: string;
-    @Column()
-    date_of_birth: Date;
-    @Column()
+
+    @Column({ type: 'date' })
+    date_of_birth: string;
+
+    @Column({ unique: true })
     email: string;
-    @Column()
+
+    @CreateDateColumn()
     created_at: Date;
-    @Column()
-    user_verified_at: Date;
-    @Column()
-    deleted_at: Date;
+
+    @Column({ type: 'timestamp', nullable: true })
+    user_verified_at: Date | null;
+
+    @Column({ type: 'timestamp', nullable: true })
+    deleted_at: Date | null;
+
     @Column()
     hashed_password: string;
-    @Column()
-    verification_key: number;
-    @Column()
-    reset_password_key: number;
-    @Column()
+
+    @Column({ type: 'varchar', nullable: true })
+    verification_key: string | null;
+
+    @Column({ type: 'varchar', nullable: true })
+    reset_password_key: string | null;
+
+    @Column({ default: 'user' })
     user_role: string;
-
-
-
 }
