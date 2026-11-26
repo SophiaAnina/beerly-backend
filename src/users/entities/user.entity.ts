@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+export type Role = 'user'| 'admin';
 @Entity()
 export class User {
     @PrimaryGeneratedColumn('uuid')
@@ -25,15 +26,17 @@ export class User {
     @Column({ type: 'timestamp', nullable: true })
     deleted_at: Date | null;
 
-    @Column()
-    hashed_password: string;
-
+    @Column({ type: 'varchar', nullable: true, select: false })
+    hashed_password: string | null;
+    
     @Column({ type: 'varchar', nullable: true })
     verification_key: string | null;
 
     @Column({ type: 'varchar', nullable: true })
     reset_password_key: string | null;
 
-    @Column({ default: 'user' })
-    user_role: string;
+    @Column('simple-array',{ default: 'user' })
+    user_role: Role[];
+
+    
 }
